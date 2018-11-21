@@ -48,14 +48,16 @@ class GetFreeProxy(metaclass=ProxyMetaclass):
             '<td data-title="IP">(.*)</td>\s*<td data-title="PORT">(\d+)</td>')
         try:
             proxys = []
-            for page in range(1, 2):
+            total_pages = 2
+            for i, page in enumerate(range(1, total_pages), start=1):
                 url = 'https://www.kuaidaili.com/free/inha/{}/'.format(page)
                 html = getPage(url)
                 if html:
                     proxyMsg = KdlRe.findall(html)
                     for msg in proxyMsg:
                         proxys.append(msg)
-                    time.sleep(3)
+                    if i != len(range(1, total_pages)):
+                        time.sleep(3)
             return proxys
         except:
             print('从【快代理】获取数据失败')
@@ -66,14 +68,16 @@ class GetFreeProxy(metaclass=ProxyMetaclass):
             '<td class="country"><img src="http://fs.xicidaili.com/images/flag/cn.png" alt="Cn" /></td>\s*<td>(.*?)</td>\s*<td>(.*?)</td>')
         try:
             proxys = []
-            for page in range(1, 2):
+            total_pages = 2
+            for i, page in enumerate(range(1, total_pages), start=1):
                 url = 'http://www.xicidaili.com/nn/{}'.format(page)
                 html = getPage(url)
                 if html:
                     proxyMsg = XcRe.findall(html)
                     for msg in proxyMsg:
                         proxys.append(msg)
-                    time.sleep(3)
+                    if i != len(range(1, total_pages)):
+                        time.sleep(3)
             return proxys
         except:
             print('从【西刺代理】获取数据失败')
