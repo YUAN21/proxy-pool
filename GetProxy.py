@@ -2,8 +2,9 @@ from fake_useragent import UserAgent
 import requests
 import time
 import re
-ua = UserAgent()
+ua = UserAgent(verify_ssl=False)
 
+import VerifyProxy
 
 def getPage(url):
     headers = {
@@ -101,9 +102,10 @@ class GetFreeProxy(metaclass=ProxyMetaclass):
 
 def main():
     get_proxy = GetFreeProxy()
+    verify_proxy = VerifyProxy.VerifyProxys()
     for get_proxy_function in get_proxy.functions:
         proxys = get_proxy_function(get_proxy)
-        print(proxys)
+        verify_proxy.verifyGroupProxys(proxys)
 
 
 if __name__ == '__main__':
