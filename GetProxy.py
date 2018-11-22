@@ -1,10 +1,10 @@
+import VerifyProxy
 from fake_useragent import UserAgent
 import requests
 import time
 import re
 ua = UserAgent(verify_ssl=False)
 
-import VerifyProxy
 
 def getPage(url):
     headers = {
@@ -49,7 +49,7 @@ class GetFreeProxy(metaclass=ProxyMetaclass):
             '<td data-title="IP">(.*)</td>\s*<td data-title="PORT">(\d+)</td>')
         try:
             proxys = []
-            total_pages = 2
+            total_pages = 5
             for i, page in enumerate(range(1, total_pages), start=1):
                 url = 'https://www.kuaidaili.com/free/inha/{}/'.format(page)
                 html = getPage(url)
@@ -58,6 +58,7 @@ class GetFreeProxy(metaclass=ProxyMetaclass):
                     for msg in proxyMsg:
                         proxys.append(msg)
                     if i != len(range(1, total_pages)):
+                        print('第' + str(i) + '页获取完成，等待获取下一页代理')
                         time.sleep(3)
             return proxys
         except:
@@ -69,7 +70,7 @@ class GetFreeProxy(metaclass=ProxyMetaclass):
             '<td class="country"><img src="http://fs.xicidaili.com/images/flag/cn.png" alt="Cn" /></td>\s*<td>(.*?)</td>\s*<td>(.*?)</td>')
         try:
             proxys = []
-            total_pages = 2
+            total_pages = 5
             for i, page in enumerate(range(1, total_pages), start=1):
                 url = 'http://www.xicidaili.com/nn/{}'.format(page)
                 html = getPage(url)
@@ -78,6 +79,7 @@ class GetFreeProxy(metaclass=ProxyMetaclass):
                     for msg in proxyMsg:
                         proxys.append(msg)
                     if i != len(range(1, total_pages)):
+                        print('第' + str(i) + '页获取完成，等待获取下一页代理')
                         time.sleep(3)
             return proxys
         except:
