@@ -1,27 +1,26 @@
 import aiohttp
 import asyncio
+from DataBase import RedisClient
 
 
 class VerifyProxys():
     def __init__(self):
-        pass
+        self.db = RedisClient()
 
     async def verifySingleProxy(self, proxy):
-        str_proxy = str(proxy)
-        print('验证代理: ' + str_proxy)
-        if not proxy[0] or not proxy[1]:
-            return print('代理' + str_proxy + '似乎缺少必要数据')
         # DO 验证是否重复于数据库
+        print('当前代理：' + proxy)
         try:
             async with aiohttp.ClientSession() as session:
                 try:
-                    proxy_url = 'http://' + proxy[0] + ':' + proxy[1]
+                    proxy_url = 'http://' + proxy
                     async with session.get('http://www.baidu.com', proxy=proxy_url, timeout=30) as response:
                         if response.status == 200:
-                            print('这是一个好代理：'+str_proxy+'')  
-                            # DO 入库
+                            print('可用代理：' + proxy + '，准备入库')
+                            self.db.storage(proxy)
+
                 except Exception as e:
-                    print('错误代理：' + str_proxy + str(e))
+                    print('不可用代理：' + proxy + ',' + str(e))
         except:
             pass
 
@@ -33,5 +32,5 @@ class VerifyProxys():
                      for proxyMsg in groupProxyMsgs]
             loop.run_until_complete(asyncio.wait(tasks))
         except Exception as e:
-            print('多代理数据验证错误【GROUP】')
+            print('多代理数据验证错误【GROUP】' + str(groupProxyMsgs))
             print(e)

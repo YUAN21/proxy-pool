@@ -38,7 +38,7 @@ class ProxyMetaclass(type):
                 functions.append(function_content)
         attrs['functions'] = functions
         # 元类必须返回一个类
-        # 这就是基本的OOP编程。由于type是元类也就是类，因此它本身也是通过__new__方法生成其实例，只不过这个实例是一个类.
+        # 基本的OOP编程。由于type是元类也就是类，因此它本身也是通过__new__方法生成其实例，只不过这个实例是一个类.
         return type.__new__(cls, name, bases, attrs)
 
 
@@ -49,16 +49,18 @@ class GetFreeProxy(metaclass=ProxyMetaclass):
             '<td data-title="IP">(.*)</td>\s*<td data-title="PORT">(\d+)</td>')
         try:
             proxys = []
-            total_pages = 5
+            total_pages = 1
             for i, page in enumerate(range(1, total_pages), start=1):
                 url = 'https://www.kuaidaili.com/free/inha/{}/'.format(page)
+                print('开始获取第' + str(i) + '页数据')
                 html = getPage(url)
                 if html:
                     proxyMsg = KdlRe.findall(html)
+                    print(proxyMsg)
                     for msg in proxyMsg:
-                        proxys.append(msg)
+                        print(type(msg))
+                        proxys.append(msg[0] + ':' + msg[1])
                     if i != len(range(1, total_pages)):
-                        print('第' + str(i) + '页获取完成，等待获取下一页代理')
                         time.sleep(3)
             return proxys
         except:
@@ -70,16 +72,16 @@ class GetFreeProxy(metaclass=ProxyMetaclass):
             '<td class="country"><img src="http://fs.xicidaili.com/images/flag/cn.png" alt="Cn" /></td>\s*<td>(.*?)</td>\s*<td>(.*?)</td>')
         try:
             proxys = []
-            total_pages = 5
+            total_pages = 1
             for i, page in enumerate(range(1, total_pages), start=1):
                 url = 'http://www.xicidaili.com/nn/{}'.format(page)
+                print('开始获取第' + str(i) + '页数据')
                 html = getPage(url)
                 if html:
                     proxyMsg = XcRe.findall(html)
                     for msg in proxyMsg:
-                        proxys.append(msg)
+                        proxys.append(msg[0] + ':' + msg[1])
                     if i != len(range(1, total_pages)):
-                        print('第' + str(i) + '页获取完成，等待获取下一页代理')
                         time.sleep(3)
             return proxys
         except:
@@ -96,7 +98,7 @@ class GetFreeProxy(metaclass=ProxyMetaclass):
                 proxyMsg = WuYouRe.findall(html)
                 proxys = []
                 for msg in proxyMsg:
-                    proxys.append(msg)
+                    proxys.append(msg[0] + ':' + msg[1])
                 return proxys
         except:
             print('从【无忧代理】获取数据失败')
