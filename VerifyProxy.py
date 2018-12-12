@@ -14,11 +14,11 @@ class VerifyProxys():
             async with aiohttp.ClientSession() as session:
                 try:
                     proxy_url = 'http://' + proxy
-                    async with session.get('http://www.baidu.com', proxy=proxy_url, timeout=30) as response:
+                    # async with session.get('http://www.baidu.com', proxy=proxy_url, timeout=30) as response:
+                    async with session.get('http://www.baidu.com', timeout=30) as response:
                         if response.status == 200:
                             print('可用代理：' + proxy + '，准备入库')
                             self.db.storage(proxy)
-
                 except Exception as e:
                     print('不可用代理：' + proxy + ',' + str(e))
         except:

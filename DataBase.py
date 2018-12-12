@@ -5,4 +5,5 @@ class RedisClient():
         self.dbClient = redis.Redis(host='localhost', port=6379)
 
     def storage(self, proxy):
-        self.dbClient.rpush('proxies', proxy)
+       print(self.dbClient.sadd('proxies', proxy))
+

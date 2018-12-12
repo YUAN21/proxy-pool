@@ -49,16 +49,14 @@ class GetFreeProxy(metaclass=ProxyMetaclass):
             '<td data-title="IP">(.*)</td>\s*<td data-title="PORT">(\d+)</td>')
         try:
             proxys = []
-            total_pages = 1
+            total_pages = 2
             for i, page in enumerate(range(1, total_pages), start=1):
                 url = 'https://www.kuaidaili.com/free/inha/{}/'.format(page)
                 print('开始获取第' + str(i) + '页数据')
                 html = getPage(url)
                 if html:
                     proxyMsg = KdlRe.findall(html)
-                    print(proxyMsg)
                     for msg in proxyMsg:
-                        print(type(msg))
                         proxys.append(msg[0] + ':' + msg[1])
                     if i != len(range(1, total_pages)):
                         time.sleep(3)
@@ -69,10 +67,10 @@ class GetFreeProxy(metaclass=ProxyMetaclass):
     def fromXiCi(self):
         print('开始从【西刺代理】获取数据')
         XcRe = re.compile(
-            '<td class="country"><img src="http://fs.xicidaili.com/images/flag/cn.png" alt="Cn" /></td>\s*<td>(.*?)</td>\s*<td>(.*?)</td>')
+            '<td class="country"><img src="//fs.xicidaili.com/images/flag/cn.png" alt="Cn" /></td>\s*<td>(.*?)</td>\s*<td>(.*?)</td>')
         try:
             proxys = []
-            total_pages = 1
+            total_pages = 2
             for i, page in enumerate(range(1, total_pages), start=1):
                 url = 'http://www.xicidaili.com/nn/{}'.format(page)
                 print('开始获取第' + str(i) + '页数据')
