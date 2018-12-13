@@ -1,3 +1,4 @@
 .vscode/launch.json
 __pycache__/VerifyProxy.cpython-36.pyc
 __pycache__/DataBase.cpython-36.pyc
+__pycache__/GetProxy.cpython-36.pyc
