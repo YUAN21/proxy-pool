@@ -1,0 +1,6 @@
+requests>=2.14.2
+fake-useragent>=0.1.11
+aiohttp>=3.4.4
+asyncio>=3.4.3
+Flask>=0.12.2
+redis>=3.0.1

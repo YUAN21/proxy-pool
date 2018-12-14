@@ -6,8 +6,8 @@ class RedisClient():
         self.dbClient = redis.Redis(host='localhost', port=6379, decode_responses=True)
 
     def storage(self, proxy):
-        print(self.dbClient.rpush('proxies', proxy))
-
+        self.dbClient.rpush('proxies', proxy)
+        
     def get_list_length(self):
         return self.dbClient.llen('proxies')
 
@@ -18,3 +18,6 @@ class RedisClient():
 
     def remove_duplicate_values(self, value):
         self.dbClient.lrem('proxies', 0, value)
+
+    def get_proxy(self):
+        return self.dbClient.rpop('proxies')

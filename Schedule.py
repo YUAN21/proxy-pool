@@ -7,11 +7,6 @@ from GetProxy import GetFreeProxy
 
 
 class Schedule():
-    # def __init__(self):
-    #     self.db = RedisClient()
-    #     self.valid_proxy = VerifyProxys()
-    #     self.get_proxies = GetFreeProxy()
-
     @staticmethod
     def check_proxy():
         db = RedisClient()
@@ -50,8 +45,8 @@ class Schedule():
 
 
 def main():
-    sss = Schedule()
-    sss.run()
+    s = Schedule()
+    s.run()
 
 
 if __name__ == '__main__':

@@ -11,7 +11,7 @@ class VerifyProxys():
         self.db = RedisClient()
 
     async def verifySingleProxy(self, proxy):
-        print('当前验证代理：' + proxy)
+        print('当前假装要验证代理：' + proxy)
         try:
             async with aiohttp.ClientSession() as session:
                 try:
@@ -20,7 +20,7 @@ class VerifyProxys():
                     async with session.get('http://www.baidu.com', timeout=30) as response:
                         if response.status == 200:
                             if random.randint(1, 10) <=7:
-                                print('可用代理：' + proxy + '，准备入库')
+                                print('谁知道可不可用代理：' + proxy + '，准备入库')
                                 self.db.remove_duplicate_values(proxy)
                                 self.db.storage(proxy)
                             else:
@@ -31,12 +31,12 @@ class VerifyProxys():
             pass
 
     def verifyGroupProxys(self, groupProxyMsgs):
-        print('开始验证多个代理数据【GROUP】')
+        print('开始装模做样验证多个代理数据【GROUP】')
         try:
             loop = asyncio.get_event_loop()
             tasks = [self.verifySingleProxy(proxyMsg)
                      for proxyMsg in groupProxyMsgs]
             loop.run_until_complete(asyncio.wait(tasks))
         except Exception as e:
-            print('多代理数据验证错误【GROUP】')
+            print('多代理数据验证还真发生了错误【GROUP】')
             print(e)
